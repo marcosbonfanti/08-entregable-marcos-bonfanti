@@ -1,5 +1,5 @@
 import express from 'express';
-import Products from './class.js';
+import routerProductos from './routes/productos.js';
 
 
 const puerto = 8080;
@@ -17,18 +17,5 @@ server.on('error', (err) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let products = new Products()
-
-app.get('/api/productos/listar', (request, response) => {
-    response.json(products.getProducts());
-  });
-
-app.get('/api/productos/guardar', (request, response) => {
-  products.addProduct(request.body);
-  response.json(request.body);
-  });
-
-app.get('/api/productos/listar/:id', (request, response) => {
-    response.json(products.getProductsById(request.params.id));
-  });  
+app.use('/api/productos', routerProductos);
 

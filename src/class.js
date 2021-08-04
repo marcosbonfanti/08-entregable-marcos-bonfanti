@@ -1,9 +1,10 @@
 class Products {
     constructor (){
         this.products = [];
+        this.contador = 0
     }
     getProducts() {
-        if(!this.products.length){
+        if(!this.contador){
             return {"error": "No hay productos"};     
         }
         else{
@@ -11,8 +12,8 @@ class Products {
         } 
     }
     addProduct(productAdd) {
-        productAdd['id'] = this.products.length + 1;
-        console.log(productAdd);
+        this.contador++; 
+        productAdd['id'] = this.contador;
         this.products.push(productAdd);
         return this.products;
     }
@@ -24,6 +25,27 @@ class Products {
             return (this.products.find(o => o.id ==  id));
         }
     }
+    actualizar(productAdd, id) {
+        if(this.products.find(o => o.id ==  id) == undefined){
+            return {"error": "Producto no encontrado"};
+        }    
+        else {
+            const index = this.products.findIndex(o => o.id ==  id);
+            productAdd['id'] = id
+            this.products[index] = productAdd;
+            return this.products
+        }
+    }
+    borrar(id) {
+        if(this.products.find(o => o.id ==  id) == undefined){
+            return {"error": "Producto no encontrado"};
+        }    
+        else {
+            const index = this.products.findIndex(o => o.id ==  id);
+            this.products.splice(index, 1);
+            return this.products
+        }
+    }    
 
 }
 
